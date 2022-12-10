@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D myRigidbody2D;
     private float movSpeed = 5f;
 
+    public List<Item> ownedItems = new List<Item>();
+    public InventoryManager myInvenvory;
+
+    public SpriteRenderer playerTshirt;
+    public SpriteRenderer playerShorts;
+
     public Animator myAnim;
     void Start()
     {
-        
+        foreach (Item itm in myInvenvory.ItemButtons)
+        ownedItems.Add(itm);
     }
 
     // Update is called once per frame
@@ -28,9 +36,23 @@ public class PlayerController : MonoBehaviour
             myAnim.SetFloat("lastMoveX" , Input.GetAxisRaw("Horizontal"));
             myAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
+
+
+        foreach (Item itm in ownedItems)
+        {
+            if (itm.isEquiped == true && itm.clotheType == ("top"))
+            {
+                playerTshirt.sprite = itm.itemImage;
+            } else if (itm.isEquiped == true && itm.clotheType == ("bottom"))
+            {
+                playerShorts.sprite = itm.itemImage; 
+            }
+
+            }
+        }
     }
 
 
 
 
-}
+

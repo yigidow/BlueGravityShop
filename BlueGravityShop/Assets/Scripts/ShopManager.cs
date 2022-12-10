@@ -24,8 +24,9 @@ public class ShopManager : MonoBehaviour
         isCharEntered = true;
         Debug.Log("welcome");
     }
-    private void CharacterLeaved()
+    private void OnTriggerExit2D(Collider2D other)
     {
         isCharEntered = false;
+        Debug.Log("bye");
     }
 }

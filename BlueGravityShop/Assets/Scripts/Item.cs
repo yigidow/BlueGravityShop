@@ -13,14 +13,22 @@ public class Item : MonoBehaviour
 
     public Image itemImageShown;
 
-    void Start()
+    public bool isEquiped ;
+
+    void Awake()
     {
     itemImageShown.sprite = itemImage;
     }
 
 // Update is called once per frame
-void Update()
-    {
+    void Update()
+        {
         
+        }
+    public void EquipItem() 
+    {
+        isEquiped = true;
     }
+    
+
 }

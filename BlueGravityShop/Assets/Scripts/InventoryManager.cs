@@ -16,4 +16,11 @@ public class InventoryManager : MonoBehaviour
     {
         
     }
+    public void UnEquipItems()
+    {
+        foreach(Item itm in ItemButtons)
+        {
+            itm.isEquiped = false;
+        }
+    }
 }
