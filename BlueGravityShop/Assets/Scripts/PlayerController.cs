@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D myRigidbody2D;
@@ -28,4 +29,8 @@ public class PlayerController : MonoBehaviour
             myAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
     }
+
+
+
+
 }
