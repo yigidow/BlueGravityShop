@@ -25,19 +25,29 @@ public class Item : MonoBehaviour
         buyPrice.text = buyValue.ToString() + ("$");
         sellPrice.text = sellValue.ToString() + ("$");
         itemImageShown.sprite = itemImage;
-        SetButtonFunctions();
+        //SetButtonFunctions();
     }
 
 // Update is called once per frame
     void Update()
     {
+
     }
+
     public void EquipItem() 
     {
         Debug.Log("equip");
         isEquiped = true;
     }
-    
+    public void UnEquipOtherItems()
+    {
+        if (isEquiped)
+        {
+            Debug.Log("unequip");
+            //isEquiped = false;
+        }
+    }
+
     public void BuyItem()
     {
         Debug.Log("buy");

@@ -19,8 +19,10 @@ public class PlayerController : MonoBehaviour
     public Animator myAnim;
     void Start()
     {
-        foreach (Item itm in myInvenvory.ItemButtons)
-        ownedItems.Add(itm);
+        foreach (Item itm in ownedItems)
+        {
+            myInvenvory.InventoryItems.Add(itm);
+        }
     }
 
     // Update is called once per frame
@@ -32,26 +34,29 @@ public class PlayerController : MonoBehaviour
         myAnim.SetFloat("movX", myRigidbody2D.velocity.x);
         myAnim.SetFloat("movY", myRigidbody2D.velocity.y);
 
-        if(Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
-            myAnim.SetFloat("lastMoveX" , Input.GetAxisRaw("Horizontal"));
+            myAnim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             myAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
 
-
+        //to Equip Items
         foreach (Item itm in ownedItems)
         {
             if (itm.isEquiped == true && itm.clotheType == ("top"))
             {
                 playerTshirt.sprite = itm.itemImage;
-            } else if (itm.isEquiped == true && itm.clotheType == ("bottom"))
-            {
-                playerShorts.sprite = itm.itemImage; 
+                itm.isEquiped = false;
             }
-
+            else if (itm.isEquiped == true && itm.clotheType == ("bottom"))
+            {
+                playerShorts.sprite = itm.itemImage;
+                itm.isEquiped = false;
             }
         }
     }
+    
+}
 
 
 

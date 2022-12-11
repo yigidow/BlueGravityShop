@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
+    public ShopInventoryManager myShop;
     public List<Item> ShopInventory = new List<Item>();
     public BoxCollider2D shopArea;
     public bool isCharEntered;
@@ -11,8 +12,7 @@ public class ShopManager : MonoBehaviour
     //public GameObject speachBubble;
     void Start()
     {
-        //foreach (Item itm in )
-            //ownedItems.Add(itm);
+        SetShopInventoryToBuy();
     }
 
     // Update is called once per frame
@@ -29,5 +29,13 @@ public class ShopManager : MonoBehaviour
     {
         isCharEntered = false;
         Debug.Log("bye");
+    }
+
+    public void SetShopInventoryToBuy()
+    {
+        foreach (Item itm in ShopInventory)
+        {
+            myShop.ShopBuyInventory.Add(itm);
+        }
     }
 }
