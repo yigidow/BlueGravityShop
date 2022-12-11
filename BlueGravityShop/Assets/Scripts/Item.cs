@@ -18,7 +18,9 @@ public class Item : MonoBehaviour
     public TMP_Text buyPrice;
     public TMP_Text sellPrice;
 
-    public bool isEquiped ;
+    public bool isEquiped;
+    public bool isBuying;
+    public bool isSelling;
 
     void Awake()
     {
@@ -39,21 +41,15 @@ public class Item : MonoBehaviour
         Debug.Log("equip");
         isEquiped = true;
     }
-    public void UnEquipOtherItems()
-    {
-        if (isEquiped)
-        {
-            Debug.Log("unequip");
-            //isEquiped = false;
-        }
-    }
 
     public void BuyItem()
     {
+        isBuying = true;
         Debug.Log("buy");
     }
     public void SellItem()
     {
+        isSelling = true;
         Debug.Log("sell");
     }
 

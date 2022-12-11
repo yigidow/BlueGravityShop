@@ -25,15 +25,34 @@ public class InventoryManager : MonoBehaviour
             GameObject newItem = Instantiate(itm.gameObject);
             newItem.gameObject.transform.SetParent(gameObject.transform);
             newItem.gameObject.SetActive(true);
-            newItem.gameObject.GetComponent<Button>().onClick.AddListener(delegate { itm.EquipItem(); });
-            newItem.gameObject.GetComponent<Button>().onClick.AddListener(delegate { itm.UnEquipOtherItems(); });
+            newItem.GetComponent<Button>().onClick.AddListener(delegate { itm.EquipItem(); });
         }
     }
     public void SetShopInventoryToSell()
     {
         foreach (Item itm in InventoryItems)
         {
-            myShopInventory.ShopSellInventory.Add(itm);
+            if (!myShopInventory.ShopSellInventory.Contains(itm))
+            {
+                myShopInventory.ShopSellInventory.Add(itm);
+            }
         }
     }
+    public void AddItemToInventory(Item itm)
+    {
+        InventoryItems.Add(itm);
+        itm.gameObject.transform.SetParent(gameObject.transform);
+        itm.GetComponent<Button>().onClick.AddListener(delegate { itm.EquipItem(); });
+        itm.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+
+        SetShopInventoryToSell();
+        myShopInventory.SetSellItems();
+    }
+    //public void RemoveItemFromInventory(Item itm)
+    //{
+    //    InventoryItems.Remove(itm);
+    //    myShopInventory.AddBuyItems(itm);
+        
+    //    Destroy(itm.gameObject);
+    //}
 }
