@@ -11,7 +11,8 @@ public class ShopManager : MonoBehaviour
     //public GameObject speachBubble;
     void Start()
     {
-        
+        //foreach (Item itm in )
+            //ownedItems.Add(itm);
     }
 
     // Update is called once per frame

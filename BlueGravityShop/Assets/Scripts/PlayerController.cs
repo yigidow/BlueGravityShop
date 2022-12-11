@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public SpriteRenderer playerTshirt;
     public SpriteRenderer playerShorts;
+    public int playerMoney;
 
     public Animator myAnim;
     void Start()
