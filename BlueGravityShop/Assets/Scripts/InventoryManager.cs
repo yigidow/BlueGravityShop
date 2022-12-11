@@ -46,13 +46,13 @@ public class InventoryManager : MonoBehaviour
         itm.gameObject.transform.GetChild(1).gameObject.SetActive(false);
 
         SetShopInventoryToSell();
-        myShopInventory.SetSellItems();
     }
     //public void RemoveItemFromInventory(Item itm)
     //{
     //    InventoryItems.Remove(itm);
     //    myShopInventory.AddBuyItems(itm);
-        
+
     //    Destroy(itm.gameObject);
     //}
+
 }

@@ -8,10 +8,11 @@ public class ShopInventoryManager : MonoBehaviour
     public GameObject shopBuyScreen;
     public GameObject shopSellScreen;
 
-    public List<GameObject> ShopSellInventoryShown = new List<GameObject>();
-
     public List<Item> ShopBuyInventory = new List<Item>();
     public List<Item> ShopSellInventory = new List<Item>();
+
+    public List<GameObject> ShopBuyInventoryGameObj = new List<GameObject>();
+    public List<GameObject> ShopSellInventoryGameObj = new List<GameObject>();
 
     public InventoryManager playerInvenvory;
     public ShopManager Shop;
@@ -31,19 +32,13 @@ public class ShopInventoryManager : MonoBehaviour
     {    
         foreach (Item itm in ShopSellInventory)
         {
-            if (!ShopSellInventoryShown.Contains(itm.gameObject))
-            {
-                GameObject newItemToSell = Instantiate(itm.gameObject);
-                newItemToSell.gameObject.transform.SetParent(shopSellScreen.gameObject.transform);
-                newItemToSell.gameObject.SetActive(true);
-                newItemToSell.gameObject.GetComponent<Button>().onClick.AddListener(delegate { itm.SellItem(); });
-                newItemToSell.gameObject.transform.GetChild(2).gameObject.SetActive(true);
-                ShopSellInventoryShown.Add(newItemToSell);
-            }
-            else
-            {
-                Destroy(itm.gameObject);
-            }
+            GameObject newItemToSell = Instantiate(itm.gameObject);
+            newItemToSell.gameObject.transform.SetParent(shopSellScreen.gameObject.transform);
+            newItemToSell.gameObject.SetActive(true);
+            newItemToSell.gameObject.GetComponent<Button>().onClick.AddListener(delegate { itm.SellItem(); });
+            newItemToSell.GetComponent<Button>().onClick.AddListener(delegate { SwitchToBuyScreen(newItemToSell); });
+            newItemToSell.gameObject.transform.GetChild(2).gameObject.SetActive(true);
+            ShopSellInventoryGameObj.Add(newItemToSell);
         }
     }
     public void SetBuyItems()
@@ -54,8 +49,20 @@ public class ShopInventoryManager : MonoBehaviour
             newItemToBuy.gameObject.transform.SetParent(shopBuyScreen.gameObject.transform);
             newItemToBuy.gameObject.SetActive(true);
             newItemToBuy.GetComponent<Button>().onClick.AddListener(delegate { itm.BuyItem(); });
+            newItemToBuy.GetComponent<Button>().onClick.AddListener(delegate { SwitchToSellScreen(newItemToBuy); });
             newItemToBuy.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+            ShopBuyInventoryGameObj.Add(newItemToBuy);
         }
+    }
+    public void SwitchToSellScreen(GameObject go)
+    {
+        go.transform.SetParent(shopSellScreen.gameObject.transform);
+        go.GetComponent<Button>().onClick.AddListener(delegate { SwitchToBuyScreen(go); });
+    }
+    public void SwitchToBuyScreen(GameObject go)
+    {
+        go.transform.SetParent(shopBuyScreen.gameObject.transform);
+        go.GetComponent<Button>().onClick.AddListener(delegate { SwitchToSellScreen(go); });
     }
     //public void AddSellItems(Item itm)
     //{

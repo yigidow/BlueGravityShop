@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach(Item itm in myShop.ShopInventory)
         {
-            if(itm.isBuying == true && playerMoney >= itm.buyValue)
+            if(itm.isBuying == true && playerMoney > itm.buyValue && !ownedItems.Contains(itm))
             {
                 ownedItems.Add(itm);
                 myInvenvory.AddItemToInventory(itm);

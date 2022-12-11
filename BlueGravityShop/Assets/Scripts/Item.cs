@@ -22,6 +22,9 @@ public class Item : MonoBehaviour
     public bool isBuying;
     public bool isSelling;
 
+    public bool switchToBuy;
+    public bool switchToSell;
+
     void Awake()
     {
         buyPrice.text = buyValue.ToString() + ("$");
@@ -51,6 +54,16 @@ public class Item : MonoBehaviour
     {
         isSelling = true;
         Debug.Log("sell");
+    }
+
+    public void SwitchToBuy()
+    {
+        switchToBuy = true;
+    }
+    public void SwitchToSell()
+    {
+        Debug.Log("switchsell");
+        switchToSell = true;
     }
 
     public void SetButtonFunctions()
