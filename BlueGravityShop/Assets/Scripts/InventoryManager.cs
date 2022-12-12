@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public List<Item> InventoryItems = new List<Item>();
+    public List<GameObject> InventoryObjs = new List<GameObject>();
     public ShopInventoryManager myShopInventory;
     void Start()
     {
-        SetInventory();
-        SetShopInventoryToSell();
+
     }
 
     // Update is called once per frame
@@ -18,41 +17,37 @@ public class InventoryManager : MonoBehaviour
     {
         
     }
-    public void SetInventory()
-    {
-        foreach (Item itm in InventoryItems)
-        {
-            GameObject newItem = Instantiate(itm.gameObject);
-            newItem.gameObject.transform.SetParent(gameObject.transform);
-            newItem.gameObject.SetActive(true);
-            newItem.GetComponent<Button>().onClick.AddListener(delegate { itm.EquipItem(); });
-        }
-    }
-    public void SetShopInventoryToSell()
-    {
-        foreach (Item itm in InventoryItems)
-        {
-            if (!myShopInventory.ShopSellInventory.Contains(itm))
-            {
-                myShopInventory.ShopSellInventory.Add(itm);
-            }
-        }
-    }
+    
     public void AddItemToInventory(Item itm)
     {
-        InventoryItems.Add(itm);
+        InventoryObjs.Add(itm.gameObject);
         itm.gameObject.transform.SetParent(gameObject.transform);
+        itm.GetComponent<Button>().onClick.RemoveAllListeners();
         itm.GetComponent<Button>().onClick.AddListener(delegate { itm.EquipItem(); });
-        itm.gameObject.transform.GetChild(1).gameObject.SetActive(false);
-
-        SetShopInventoryToSell();
+        itm.gameObject.transform.GetChild(2).gameObject.SetActive(true);
     }
-    //public void RemoveItemFromInventory(Item itm)
-    //{
-    //    InventoryItems.Remove(itm);
-    //    myShopInventory.AddBuyItems(itm);
+    public void RemoveItemFromInventory(Item itm)
+    {
+        InventoryObjs.Remove(itm.gameObject);
+        itm.gameObject.transform.SetParent(myShopInventory.shopBuyScreen.gameObject.transform);
+        itm.GetComponent<Button>().onClick.RemoveAllListeners();
+        itm.GetComponent<Button>().onClick.AddListener(delegate { itm.BuyItem(); });
+    }
 
-    //    Destroy(itm.gameObject);
-    //}
-
+    public void ChangeToSell()
+    {
+        foreach(GameObject go in InventoryObjs)
+        {
+            go.GetComponent<Button>().onClick.RemoveAllListeners();
+            go.GetComponent<Button>().onClick.AddListener(delegate { go.gameObject.GetComponent<Item>().SellItem(); });
+        }
+    }
+    public void ChangeToEquip()
+    {
+        foreach (GameObject go in InventoryObjs)
+        {
+            go.GetComponent<Button>().onClick.RemoveAllListeners();
+            go.GetComponent<Button>().onClick.AddListener(delegate { go.gameObject.GetComponent<Item>().EquipItem(); });
+        }
+    }
 }

@@ -10,7 +10,6 @@ public class UICanvasManager : MonoBehaviour
     public ShopManager myShop;
     public GameObject shopMenu;
     public GameObject shopInventoryMenu;
-    public GameObject shopBuyMenu;
  
     private bool isShopOpened;
 
@@ -43,16 +42,16 @@ public class UICanvasManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
-                shopMenu.gameObject.SetActive(true);
+                openShopMenu();
             }
         }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                shopMenu.gameObject.SetActive(false);
-            }
-        }
+        //else
+        //{
+        //    if (Input.GetKeyDown(KeyCode.K))
+        //    {
+        //        closeShopMenu();
+        //    }
+        //}
     }
 
     public void openInventoryMenu()
@@ -76,15 +75,22 @@ public class UICanvasManager : MonoBehaviour
         shopInventoryMenu.gameObject.SetActive(false);
         shopInventoryOpened = false;
     }
-    public void openPlayerBuyInventory()
+    public void openShopMenu()
     {
-        shopBuyMenu.gameObject.SetActive(true);
-        shopBuyMenuOpened = true;
+        shopMenu.gameObject.SetActive(true);
+        isShopOpened = true;
+    }
+    public void closeShopMenu()
+    {
+        shopMenu.gameObject.SetActive(false);
+        isShopOpened = false;
+    }
 
-    }
-    public void closePlayerBuyInventory()
+    public void ExitShop()
     {
-        shopBuyMenu.gameObject.SetActive(false);
-        shopBuyMenuOpened = false;
+        closeShopInventory();
+        closeInventoryMenu();
+        closeShopMenu();
     }
+
 }

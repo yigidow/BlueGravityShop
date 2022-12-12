@@ -22,15 +22,11 @@ public class Item : MonoBehaviour
     public bool isBuying;
     public bool isSelling;
 
-    public bool switchToBuy;
-    public bool switchToSell;
-
     void Awake()
     {
         buyPrice.text = buyValue.ToString() + ("$");
         sellPrice.text = sellValue.ToString() + ("$");
         itemImageShown.sprite = itemImage;
-        //SetButtonFunctions();
     }
 
 // Update is called once per frame
@@ -56,29 +52,4 @@ public class Item : MonoBehaviour
         Debug.Log("sell");
     }
 
-    public void SwitchToBuy()
-    {
-        switchToBuy = true;
-    }
-    public void SwitchToSell()
-    {
-        Debug.Log("switchsell");
-        switchToSell = true;
-    }
-
-    public void SetButtonFunctions()
-    {
-        if (itemButton.gameObject.transform.parent.name == ("InventoryScreen"))
-        {
-            itemButton.onClick.AddListener(delegate { EquipItem(); });
-        }
-        else if (itemButton.gameObject.transform.parent.name == ("ShopBuyScreen"))
-        {
-            itemButton.onClick.AddListener(delegate { BuyItem(); });
-        }
-        else if (itemButton.gameObject.transform.parent.name == ("ShopSellScreen"))
-        {
-            itemButton.onClick.AddListener(delegate { SellItem(); });
-        }
-    }
 }

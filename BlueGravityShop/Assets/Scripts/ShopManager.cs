@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -35,7 +36,11 @@ public class ShopManager : MonoBehaviour
     {
         foreach (Item itm in ShopInventory)
         {
-            myShop.ShopBuyInventory.Add(itm);
+            GameObject newItemBuy = Instantiate(itm.gameObject);
+            newItemBuy.gameObject.transform.SetParent(myShop.shopBuyScreen.gameObject.transform);
+            newItemBuy.gameObject.SetActive(true);
+            newItemBuy.GetComponent<Button>().onClick.AddListener(delegate { newItemBuy.gameObject.GetComponent<Item>().BuyItem(); });
+            myShop.ShopBuyInventory.Add(newItemBuy);
         }
     }
 }

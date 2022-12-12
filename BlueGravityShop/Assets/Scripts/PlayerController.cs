@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -21,10 +22,7 @@ public class PlayerController : MonoBehaviour
     public Animator myAnim;
     void Start()
     {
-        foreach (Item itm in ownedItems)
-        {
-            myInvenvory.InventoryItems.Add(itm);
-        }
+        SetInventory();
     }
 
     // Update is called once per frame
@@ -33,8 +31,7 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
         EquipItems();
         BuyItems();
-        //SellItems();
-
+        SellItems();
     }
     void PlayerMovement()
     {
@@ -50,49 +47,63 @@ public class PlayerController : MonoBehaviour
             myAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
     }
-    void EquipItems()
+    public void SetInventory()
     {
         foreach (Item itm in ownedItems)
         {
-            if (itm.isEquiped == true && itm.clotheType == ("top"))
+            GameObject newItem = Instantiate(itm.gameObject);
+            newItem.gameObject.transform.SetParent(myInvenvory.gameObject.transform);
+            newItem.gameObject.SetActive(true);
+            newItem.GetComponent<Button>().onClick.AddListener(delegate { newItem.gameObject.GetComponent<Item>().EquipItem(); });
+            myInvenvory.InventoryObjs.Add(newItem);
+        }
+    }
+
+    void EquipItems()
+    {
+        foreach (GameObject go in myInvenvory.InventoryObjs)
+        {
+            if (go.gameObject.GetComponent<Item>().isEquiped == true && go.gameObject.GetComponent<Item>().clotheType == ("top"))
             {
-                playerTshirt.sprite = itm.itemImage;
-                itm.isEquiped = false;
+                playerTshirt.sprite = go.gameObject.GetComponent<Item>().itemImage;
+                go.gameObject.GetComponent<Item>().isEquiped = false;
             }
-            else if (itm.isEquiped == true && itm.clotheType == ("bottom"))
+            else if (go.gameObject.GetComponent<Item>().isEquiped == true && go.gameObject.GetComponent<Item>().clotheType == ("bottom"))
             {
-                playerShorts.sprite = itm.itemImage;
-                itm.isEquiped = false;
+                playerShorts.sprite = go.gameObject.GetComponent<Item>().itemImage;
+                go.gameObject.GetComponent<Item>().isEquiped = false;
             }
 
         }
     }
     void BuyItems()
     {
-        foreach(Item itm in myShop.ShopInventory)
+        foreach(GameObject go in myShop.myShop.ShopBuyInventory)
         {
-            if(itm.isBuying == true && playerMoney > itm.buyValue && !ownedItems.Contains(itm))
+            if(go.gameObject.GetComponent<Item>().isBuying == true && playerMoney > go.gameObject.GetComponent<Item>().buyValue && !ownedItems.Contains(go.gameObject.GetComponent<Item>()))
             {
-                ownedItems.Add(itm);
-                myInvenvory.AddItemToInventory(itm);
-                playerMoney -= itm.buyValue;
-                itm.isBuying = false;            
+                ownedItems.Add(go.gameObject.GetComponent<Item>());
+                myInvenvory.AddItemToInventory(go.gameObject.GetComponent<Item>());
+                playerMoney -= go.gameObject.GetComponent<Item>().buyValue;
+                go.gameObject.GetComponent<Item>().isBuying = false;
             }
         }
     }
-    //void SellItems()
-    //{
-    //    foreach (Item itm in myInvenvory.InventoryItems)
-    //    {
-    //        if (itm.isSelling == true)
-    //        {
-    //            ownedItems.Remove(itm);
-    //            myInvenvory.RemoveItemFromInventory(itm);
-    //            playerMoney += itm.sellValue;
-    //            itm.isSelling = false;
-    //        }
-    //    }
-    //}
+    void SellItems()
+    {
+        foreach (GameObject go in myInvenvory.InventoryObjs)
+        {
+            if (go.gameObject.GetComponent<Item>().isSelling == true)
+            {
+                Debug.Log("pls");
+                ownedItems.Remove(go.GetComponent<Item>());
+                myInvenvory.RemoveItemFromInventory(go.gameObject.GetComponent<Item>());
+                playerMoney += go.gameObject.GetComponent<Item>().buyValue;
+                go.gameObject.GetComponent<Item>().isSelling = false;
+            }
+        }
+    }
+
 }
 
 

@@ -357,6 +357,8 @@ MonoBehaviour:
   buyPrice: {fileID: 4055968492681130027}
   sellPrice: {fileID: 4834534038598388976}
   isEquiped: 0
+  isBuying: 0
+  isSelling: 0
 --- !u!1 &6172760150584332595
 GameObject:
   m_ObjectHideFlags: 0
