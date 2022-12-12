@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
+    private Vector3 bottomLeftLimit;
+    private Vector3 topRightLimit;
+
     public Rigidbody2D myRigidbody2D;
     private float movSpeed = 5f;
 
@@ -47,6 +51,13 @@ public class PlayerController : MonoBehaviour
             //myAnim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             myAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
+
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x), Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y), transform.position.z);
+    }
+    public void SetBounds(Vector3 botLeft, Vector3 topRight)
+    {
+        bottomLeftLimit = botLeft + new Vector3 (0.5f,1f,0f);
+        topRightLimit = topRight + new Vector3(-0.5f, -1f, 0f);
     }
     public void SetInventory()
     {
