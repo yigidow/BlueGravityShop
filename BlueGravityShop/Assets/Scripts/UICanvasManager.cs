@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class UICanvasManager : MonoBehaviour
 {
+    public GameObject exitScreen;
+    [HideInInspector] public bool isExitOpened;
+
     public GameObject Inventory;
     public bool isInventoryOpened;
 
@@ -12,11 +16,24 @@ public class UICanvasManager : MonoBehaviour
     public GameObject shopInventoryMenu;
 
     public bool isShopOpened;
- 
+    
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isExitOpened == false)
+            {
+                exitScreen.SetActive(true);
+                isExitOpened = true;
+            }
+            else
+            {
+                exitScreen.SetActive(false);
+                isExitOpened = false;
+            }
+        }
         // Functions to open inventory screen, LeanTween library used for a smooth animation
         if(isInventoryOpened == false)
         {
@@ -43,14 +60,6 @@ public class UICanvasManager : MonoBehaviour
         {
             closeShopMenu();
 
-        }
-        else if (myShop.isCharEntered == true && isShopOpened == true)
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                closeShopMenu();
- 
-            }
         }
 
     }
@@ -95,4 +104,8 @@ public class UICanvasManager : MonoBehaviour
         closeShopMenu();
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

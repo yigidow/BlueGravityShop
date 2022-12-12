@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         EquipItems();
         BuyItems();
         SellItems();
-        if(myShop.isCharEntered == true && myCanvasElements.isShopOpened == true)
+        if(myShop.isCharEntered && myCanvasElements.isShopOpened || myCanvasElements.isExitOpened)
         {
             movSpeed = 0;
         }
