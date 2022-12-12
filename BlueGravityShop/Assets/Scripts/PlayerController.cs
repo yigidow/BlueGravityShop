@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        myInvenvory.playerMoney = playerMoney;
         PlayerMovement();
         EquipItems();
         BuyItems();
@@ -84,6 +85,7 @@ public class PlayerController : MonoBehaviour
             {
                 ownedItems.Add(go.gameObject.GetComponent<Item>());
                 myInvenvory.AddItemToInventory(go.gameObject.GetComponent<Item>());
+                myShop.RemoveItemFromShop(go.gameObject.GetComponent<Item>());
                 playerMoney -= go.gameObject.GetComponent<Item>().buyValue;
                 go.gameObject.GetComponent<Item>().isBuying = false;
             }
@@ -95,9 +97,9 @@ public class PlayerController : MonoBehaviour
         {
             if (go.gameObject.GetComponent<Item>().isSelling == true)
             {
-                Debug.Log("pls");
                 ownedItems.Remove(go.GetComponent<Item>());
                 myInvenvory.RemoveItemFromInventory(go.gameObject.GetComponent<Item>());
+                myShop.AddItemToShop(go.gameObject.GetComponent<Item>());
                 playerMoney += go.gameObject.GetComponent<Item>().buyValue;
                 go.gameObject.GetComponent<Item>().isSelling = false;
             }
