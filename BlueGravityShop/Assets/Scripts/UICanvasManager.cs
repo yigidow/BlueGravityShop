@@ -5,20 +5,14 @@ using UnityEngine;
 public class UICanvasManager : MonoBehaviour
 {
     public GameObject Inventory;
-    private bool isInventoryOpened;
+    public bool isInventoryOpened;
 
     public ShopManager myShop;
     public GameObject shopMenu;
     public GameObject shopInventoryMenu;
+
+    public bool isShopOpened;
  
-    private bool isShopOpened;
-
-    private bool shopBuyMenuOpened;
-    private bool shopInventoryOpened;
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,13 +39,20 @@ public class UICanvasManager : MonoBehaviour
                 openShopMenu();
             }
         }
-        //else
-        //{
-        //    if (Input.GetKeyDown(KeyCode.K))
-        //    {
-        //        closeShopMenu();
-        //    }
-        //}
+        else if (myShop.isCharEntered == false)
+        {
+            closeShopMenu();
+
+        }
+        else if (myShop.isCharEntered == true && isShopOpened == true)
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                closeShopMenu();
+ 
+            }
+        }
+
     }
 
     public void openInventoryMenu()
@@ -63,17 +64,17 @@ public class UICanvasManager : MonoBehaviour
     {
         LeanTween.moveX(Inventory, -300, 0.3f);
         isInventoryOpened = false;
+        //Inventory.gameObject.transform.GetChild(1).GetComponent<InventoryManager>().ChangeToEquip();
     }
 
     public void openShopInventory()
     {
         shopInventoryMenu.gameObject.SetActive(true);
-        shopInventoryOpened = true;
     }
     public void closeShopInventory()
     {
         shopInventoryMenu.gameObject.SetActive(false);
-        shopInventoryOpened = false;
+        //Inventory.gameObject.transform.GetChild(1).GetComponent<InventoryManager>().ChangeToEquip();
     }
     public void openShopMenu()
     {
@@ -83,6 +84,7 @@ public class UICanvasManager : MonoBehaviour
     public void closeShopMenu()
     {
         shopMenu.gameObject.SetActive(false);
+        myShop.isCharEntered = false;
         isShopOpened = false;
     }
 
