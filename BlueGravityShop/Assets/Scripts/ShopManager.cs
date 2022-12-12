@@ -9,7 +9,7 @@ public class ShopManager : MonoBehaviour
     public ShopInventoryManager myShop;
     public List<Item> ShopInventory = new List<Item>();
     public BoxCollider2D shopArea;
-    public bool isCharEntered;
+    [HideInInspector] public bool isCharEntered;
 
     //public GameObject speachBubble;
     void Start()
@@ -37,17 +37,13 @@ public class ShopManager : MonoBehaviour
     {
         myShop.ShopBuyInventory.Add(itm.gameObject);
         itm.gameObject.transform.SetParent(myShop.shopBuyScreen.gameObject.transform);
-        //itm.GetComponent<Button>().onClick.RemoveAllListeners();
-        //itm.GetComponent<Button>().onClick.AddListener(delegate { itm.BuyItem(); });
-        //itm.gameObject.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     public void RemoveItemFromShop(Item itm)
     {
         myShop.ShopBuyInventory.Remove(itm.gameObject);
         itm.gameObject.transform.SetParent(playerInventory.gameObject.transform);
-        //itm.GetComponent<Button>().onClick.RemoveAllListeners();
-        //itm.GetComponent<Button>().onClick.AddListener(delegate { itm.SellItem(); });
+
     }
     public void SetShopInventoryToBuy()
     {

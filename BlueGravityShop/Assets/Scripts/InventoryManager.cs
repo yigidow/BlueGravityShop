@@ -6,14 +6,10 @@ using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
-    public int playerMoney;
+    [HideInInspector] public int playerMoney;
     public TMP_Text playerMoneyText;
     public List<GameObject> InventoryObjs = new List<GameObject>();
     public ShopInventoryManager myShopInventory;
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -25,16 +21,12 @@ public class InventoryManager : MonoBehaviour
     {
         InventoryObjs.Add(itm.gameObject);
         itm.gameObject.transform.SetParent(gameObject.transform);
-        //itm.GetComponent<Button>().onClick.RemoveAllListeners();
-        //itm.GetComponent<Button>().onClick.AddListener(delegate { itm.EquipItem(); });
-        itm.gameObject.transform.GetChild(2).gameObject.SetActive(true);
     }
     public void RemoveItemFromInventory(Item itm)
     {
         InventoryObjs.Remove(itm.gameObject);
         itm.gameObject.transform.SetParent(myShopInventory.shopBuyScreen.gameObject.transform);
-        //itm.GetComponent<Button>().onClick.RemoveAllListeners();
-        //itm.GetComponent<Button>().onClick.AddListener(delegate { itm.BuyItem(); });
+
     }
 
     public void ChangeToSell()

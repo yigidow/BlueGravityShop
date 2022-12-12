@@ -12,16 +12,6 @@ public class ShopInventoryManager : MonoBehaviour
     public InventoryManager playerInvenvory;
     public ShopManager Shop;
 
-    void Awake()
-    {
- ;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void ChangeToBuy()
     {
         foreach (GameObject go in ShopBuyInventory)

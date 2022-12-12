@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public UICanvasManager myCanvasElements;
 
     private Vector3 bottomLeftLimit;
     private Vector3 topRightLimit;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public ShopManager myShop;
     public int playerMoney;
 
-    public Animator myAnim;
+    [HideInInspector] public Animator myAnim;
     void Start()
     {
         SetInventory();
@@ -33,10 +34,19 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         myInvenvory.playerMoney = playerMoney;
-        PlayerMovement();
         EquipItems();
         BuyItems();
         SellItems();
+        if(myShop.isCharEntered == true && myCanvasElements.isShopOpened == true)
+        {
+            movSpeed = 0;
+        }
+        else
+        {
+            movSpeed = 5f;
+        }
+        PlayerMovement();
+
     }
     void PlayerMovement()
     {
@@ -92,12 +102,12 @@ public class PlayerController : MonoBehaviour
     {
         foreach(GameObject go in myShop.myShop.ShopBuyInventory)
         {
-            if(go.gameObject.GetComponent<Item>().isBuying == true && playerMoney > go.gameObject.GetComponent<Item>().buyValue && !ownedItems.Contains(go.gameObject.GetComponent<Item>()))
+            if(go.gameObject.GetComponent<Item>().isBuying == true && playerMoney > go.gameObject.GetComponent<Item>().itemValue && !ownedItems.Contains(go.gameObject.GetComponent<Item>()))
             {
                 ownedItems.Add(go.gameObject.GetComponent<Item>());
                 myInvenvory.AddItemToInventory(go.gameObject.GetComponent<Item>());
                 myShop.RemoveItemFromShop(go.gameObject.GetComponent<Item>());
-                playerMoney -= go.gameObject.GetComponent<Item>().buyValue;
+                playerMoney -= go.gameObject.GetComponent<Item>().itemValue;
                 go.gameObject.GetComponent<Item>().isBuying = false;
             }
         }
@@ -111,7 +121,7 @@ public class PlayerController : MonoBehaviour
                 ownedItems.Remove(go.GetComponent<Item>());
                 myInvenvory.RemoveItemFromInventory(go.gameObject.GetComponent<Item>());
                 myShop.AddItemToShop(go.gameObject.GetComponent<Item>());
-                playerMoney += go.gameObject.GetComponent<Item>().buyValue;
+                playerMoney += go.gameObject.GetComponent<Item>().itemValue;
                 go.gameObject.GetComponent<Item>().isSelling = false;
             }
         }

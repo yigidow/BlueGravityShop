@@ -6,26 +6,21 @@ using TMPro;
 
 public class Item : MonoBehaviour
 {
-    public Button itemButton;
-
-    public int buyValue;
-    public int sellValue;
+    public int itemValue;
     public string clotheType;
 
     public Sprite itemImage;
 
     public Image itemImageShown;
-    public TMP_Text buyPrice;
-    public TMP_Text sellPrice;
+    public TMP_Text price;
 
-    public bool isEquiped;
-    public bool isBuying;
-    public bool isSelling;
+    [HideInInspector] public bool isEquiped;
+    [HideInInspector] public bool isBuying;
+    [HideInInspector] public bool isSelling;
 
     void Awake()
     {
-        buyPrice.text = buyValue.ToString() + ("$");
-        sellPrice.text = sellValue.ToString() + ("$");
+        price.text = itemValue.ToString() + ("$"); 
         itemImageShown.sprite = itemImage;
     }
 
